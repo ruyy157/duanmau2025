@@ -13,7 +13,7 @@
         <select id="inputStatus" name="danh_muc_id" class="form-control custom-select">
           <?php foreach ($listDanhMuc as $danhMuc): ?>
             <option <?= $danhMuc['id'] == $sanPham['danh_muc_id'] ? 'selected' : '' ?>
-                    value="<?= $danhMuc['id']; ?>">
+              value="<?= $danhMuc['id']; ?>">
               <?= $danhMuc['tendanhmuc'] ?>
             </option>
           <?php endforeach ?>
@@ -38,7 +38,11 @@
           <small style="color:red;"><?= $_SESSION['error']['giasp'] ?></small>
         <?php endif; ?>
       </div>
-
+      <div class="row mb10">
+        Giá<br>
+        <input type="text" id="giakm" name="giakm" value="<?= $sanPham['giakm'] ?>" class="form-control">
+       
+      </div>
       <div class="row mb10">
         Hình<br>
         <div class="form-group">
@@ -46,7 +50,7 @@
         </div>
         <?php if (!empty($sanPham['hinhanh'])): ?>
           <img src="<?= $sanPham['hinhanh'] ?>" alt="Ảnh sản phẩm" width="120"
-               style="margin-top:10px; border:1px solid #ddd; border-radius:5px;">
+            style="margin-top:10px; border:1px solid #ddd; border-radius:5px;">
         <?php endif; ?>
       </div>
 

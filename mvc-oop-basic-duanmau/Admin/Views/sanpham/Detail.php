@@ -98,6 +98,7 @@
             <div class="product-info">
                 <h1 class="product-title">Tên sản phẩm : <?= $sanPham['tensp'] ?></h1>
                 <p class="product-price">Giá : <?= $sanPham['giasp'] ?></p>
+                <p class="product-price" style="color: green;">Giá khuyến mãi : <?= $sanPham['giakm'] ?></p>
                 <p class="product-desc">
                     Mô tả :<?= $sanPham['mota'] ?>
                 </p>
@@ -105,7 +106,7 @@
                     Số lượng : <label for="qty"><?= $sanPham['soluong'] ?></label>
                 </div>
                  <p class="product-desc">
-                    Danh mục : <?= $sanPham['danh_muc_id'] ?>
+                    Danh mục : <?= $sanPham['tendanhmuc'] ?>
                 </p>
                 <button class="btn-buy btn btn-danger"><i class="fa-solid fa-reply-all"></i> <a href="<?= BASE_URL_ADMIN . '?act=sanpham' ?>">Quay lại</a> </button>
                 <button class="btn-buy-now btn btn-warning"><i class="fa-solid fa-hammer"></i> <a href="<?= BASE_URL_ADMIN . '?act=formsuasanpham&idsanpham=' . $sanPham['id'] ?>">Sửa</a> </button>

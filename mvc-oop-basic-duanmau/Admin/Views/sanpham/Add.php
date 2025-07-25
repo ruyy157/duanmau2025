@@ -24,6 +24,10 @@
         Giá<br>
         <input type="text" name="giasp" class="form-control">
       </div>
+      <div class="row mb10"> 
+        Giá khuyến mãi<br>
+        <input type="text" name="giakm" class="form-control">
+      </div>
       <div class="row mb10">
         Hình<br>
         <input type="file" name="hinhanh" id=""class="form-control">

@@ -9,13 +9,14 @@
             <table class="table">
                 <tr>
                     <th></th>
-                    <th>Mã sản phẩm</th>
-                    <th>Tên sản phẩm</th>
+                    <th>Mã Sản Phẩm</th>
+                    <th>Tên Sản Phẩm</th>
                     <th>Giá</th>
-                    <th>Hình ảnh</th>
-                    <th>Số lượng</th>
-                    <th>Mô tả</th>
-                    <th>Hành động</th>
+                    <th>Giá Khuyến Mãi</th>
+                    <th>Hình Ảnh</th>
+                    <th>Số Lượng</th>
+                    <th>Mô Tả</th>
+                    <th>Hành Động</th>
                 </tr>
 
 
@@ -25,6 +26,7 @@
                         <td><?= $key + 1 ?></td>
                         <td> <?= $sanPham['tensp'] ?></td>
                         <td> <?= $sanPham['giasp'] ?></td>
+                        <td><?=$sanPham['giakm']?></td>
                         <td>
                             <img src="<?= BASE_URL . $sanPham['hinhanh'] ?>"
                                 </td>

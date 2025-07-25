@@ -25,6 +25,7 @@ class AdminSanPham
         $tensp,
         $mota,
         $giasp,
+        $giakm,
         $soluong,
         $danh_muc_id,
         $hinhanh,
@@ -34,6 +35,7 @@ class AdminSanPham
              tensp,
         mota,
         giasp,
+        giakm,
         soluong,
         danh_muc_id,
         hinhanh)
@@ -41,6 +43,7 @@ class AdminSanPham
         :tensp,
         :mota,
         :giasp,
+        :giakm,
         :soluong,
         :danh_muc_id,
         :hinhanh
@@ -50,6 +53,7 @@ class AdminSanPham
             $stmt->execute([
                 ':tensp' => $tensp,
                 ':giasp' => $giasp,
+                ':giakm' => $giakm,
                 ':soluong' => $soluong,
                 ':danh_muc_id' => $danh_muc_id,
                 ':hinhanh' => $hinhanh,
@@ -113,6 +117,7 @@ class AdminSanPham
     $tensp,
     $mota,
     $giasp,
+    $giakm,
     $soluong,
     $danh_muc_id,
     $hinhanh
@@ -122,6 +127,7 @@ class AdminSanPham
                 SET tensp = :tensp,
                     mota = :mota,
                     giasp = :giasp,
+                    giakm = :giakm,
                     soluong = :soluong,
                     danh_muc_id = :danh_muc_id,
                     hinhanh = :hinhanh
@@ -132,6 +138,7 @@ class AdminSanPham
             ':tensp' => $tensp,
             ':mota' => $mota,
             ':giasp' => $giasp,
+            ':giakm' => $giakm,
             ':soluong' => $soluong,
             ':danh_muc_id' => $danh_muc_id,
             ':hinhanh' => $hinhanh,

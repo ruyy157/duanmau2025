@@ -6,9 +6,10 @@ require_once './commons/env.php'; // Khai báo biến môi trường
 require_once './commons/function.php'; // Hàm hỗ trợ
 
 // Require toàn bộ file Controllers
-require_once './controllers/ProductController.php';
+require_once './controllers/HomeController.php'; // Trang chủ
 
 // Require toàn bộ file Models
+require_once './models/DanhMucModel.php';
 require_once './models/ProductModel.php';
 
 // Route
@@ -19,6 +20,7 @@ $act = $_GET['act'] ?? '/';
 
 match ($act) {
     // Trang chủ
-    '/'=>(new ProductController())->Home(),
-
+    '/'=>(new HomeController())->Home(),
+    'chitietsanpham'=>(new HomeController())->DetailSanPham(),
+    'trangsp'=>(new HomeController())->trangSanPham(), // Trang sản phẩm
 };

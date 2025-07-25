@@ -26,6 +26,7 @@ class AdminSanPhamController
             // Lấy dữ liệu từ form
             $tensp = $_POST['tensp'] ?? '';
             $giasp = $_POST['giasp'] ?? '';
+            $giakm = $_POST['giakm'] ?? '';
             $soluong = $_POST['soluong'] ?? '';
             $danh_muc_id = $_POST['danh_muc_id'] ?? '';
             $mota = $_POST['mota'] ?? '';
@@ -68,6 +69,7 @@ class AdminSanPhamController
                 $tensp,
                 $mota,
                 $giasp,
+                $giakm,
                 $soluong,
                 $danh_muc_id,
                 $file_thumb
@@ -120,6 +122,7 @@ class AdminSanPhamController
 
         $tensp = $_POST['tensp'] ?? '';
         $giasp = $_POST['giasp'] ?? '';
+        $giakm = $_POST['giakm'] ?? '';
         $soluong = $_POST['soluong'] ?? '';
         $danh_muc_id = $_POST['danh_muc_id'] ?? '';
         $mota = $_POST['mota'] ?? '';
@@ -164,6 +167,7 @@ class AdminSanPhamController
             $tensp,
             $mota,
             $giasp,
+            $giakm,
             $soluong,
             $danh_muc_id,
             $new_file
