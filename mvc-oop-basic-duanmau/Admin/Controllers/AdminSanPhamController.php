@@ -20,85 +20,102 @@ class AdminSanPhamController
 
         // deleteSessionError();
     }
-    public function postAddSanPham()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            // Lấy dữ liệu từ form
-            $tensp = $_POST['tensp'] ?? '';
-            $giasp = $_POST['giasp'] ?? '';
-            $giakm = $_POST['giakm'] ?? '';
-            $soluong = $_POST['soluong'] ?? '';
-            $danh_muc_id = $_POST['danh_muc_id'] ?? '';
-            $mota = $_POST['mota'] ?? '';
-            $hinhanh = $_FILES['hinhanh'] ?? null;  // Thumbnail
-            $img_array = $_FILES['img_array'] ?? [];  // Album ảnh
+  public function postAddSanPham()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // Lấy dữ liệu từ form
+        $tensp = $_POST['tensp'] ?? '';
+        $giasp = $_POST['giasp'] ?? '';
+        $giakm = $_POST['giakm'] ?? '';
+        $soluong = $_POST['soluong'] ?? '';
+        $danh_muc_id = $_POST['danh_muc_id'] ?? '';
+        $mota = $_POST['mota'] ?? '';
+        $hinhanh = $_FILES['hinhanh'] ?? null;  // Thumbnail
+        $img_array = $_FILES['img_array'] ?? [];  // Album ảnh
 
-            $errors = [];
+        $errors = [];
 
-            // Kiểm tra các trường dữ liệu
-            if (empty($tensp)) {
-                $errors['tensp'] = 'Tên sản phẩm không được để trống';
+        // Validate tên sản phẩm
+        if (empty($tensp)) {
+            $errors['tensp'] = 'Tên sản phẩm không được để trống';
+        }
+
+        // Validate giá
+        if (!is_numeric($giasp) || $giasp < 0) {
+            $errors['giasp'] = 'Giá sản phẩm phải là số dương';
+        }
+
+        // Validate giá khuyến mãi
+        if (!empty($giakm)) {
+            if (!is_numeric($giakm) || $giakm < 0) {
+                $errors['giakm'] = 'Giá khuyến mãi phải là số dương';
+            } elseif ($giakm > $giasp) {
+                $errors['giakm'] = 'Giá khuyến mãi không được lớn hơn giá gốc';
             }
-            if (empty($giasp)) {
-                $errors['giasp'] = 'Giá sản phẩm không được để trống';
-            }
+        }
 
-            if (empty($soluong)) {
-                $errors['soluong'] = 'Số lượng không được để trống';
-            }
+        // Validate số lượng
+        if (!is_numeric($soluong) || $soluong < 0) {
+            $errors['soluong'] = 'Số lượng phải là số dương';
+        }
 
-            if (empty($danh_muc_id)) {
-                $errors['danh_muc_id'] = 'Danh mục phải được chọn';
-            }
-            if ($hinhanh['error'] != 0) {
-                $errors['hinhanh'] = 'Phải chọn hình ảnh đại diện (thumbnail)';
-            }
+        // Validate danh mục
+        if (!is_numeric($danh_muc_id) || $danh_muc_id <= 0) {
+            $errors['danh_muc_id'] = 'Danh mục không hợp lệ';
+        }
 
-            // Nếu có lỗi, lưu vào session và chuyển hướng lại form
-            if (!empty($errors)) {
-                $_SESSION['error'] = $errors;
-                header("Location:" . BASE_URL_ADMIN . '?act=formthemsanpham');
-                exit();
-            }
+        // Validate thumbnail
+        $allowTypes = ['image/jpeg', 'image/png', 'image/webp'];
+        if ($hinhanh['error'] != 0 || !in_array($hinhanh['type'], $allowTypes)) {
+            $errors['hinhanh'] = 'Phải chọn hình ảnh hợp lệ (jpg, png, webp)';
+        }
 
-            // Upload file thumbnail
-            $file_thumb = uploadFile($hinhanh, './uploads/');
+        // Nếu có lỗi, lưu vào session và quay lại form
+        if (!empty($errors)) {
+            $_SESSION['error'] = $errors;
+            header("Location:" . BASE_URL_ADMIN . '?act=formthemsanpham');
+            exit();
+        }
 
-            // Chèn thông tin sản phẩm vào database
-            $san_pham_id = $this->modelSanPham->insertSanPham(
-                $tensp,
-                $mota,
-                $giasp,
-                $giakm,
-                $soluong,
-                $danh_muc_id,
-                $file_thumb
-            );
+        // Upload file thumbnail
+        $file_thumb = uploadFile($hinhanh, './uploads/');
 
-            // Xử lý upload nhiều ảnh album nếu có
-            if (!empty($img_array['name'][0])) { // Kiểm tra xem có file nào được tải lên hay không
-                foreach ($img_array['name'] as $key => $value) {
-                    $file = [
-                        'name' => $img_array['name'][$key],
-                        'type' => $img_array['type'][$key],
-                        'tmp_name' => $img_array['tmp_name'][$key],
-                        'error' => $img_array['error'][$key],
-                        'size' => $img_array['size'][$key],
-                    ];
+        // Chèn thông tin sản phẩm vào database
+        $san_pham_id = $this->modelSanPham->insertSanPham(
+            $tensp,
+            $mota,
+            $giasp,
+            $giakm,
+            $soluong,
+            $danh_muc_id,
+            $file_thumb
+        );
 
-                    // Upload từng ảnh và lưu vào thư mục
+        // Xử lý upload nhiều ảnh album nếu có
+        if (!empty($img_array['name'][0])) {
+            foreach ($img_array['name'] as $key => $value) {
+                $file = [
+                    'name' => $img_array['name'][$key],
+                    'type' => $img_array['type'][$key],
+                    'tmp_name' => $img_array['tmp_name'][$key],
+                    'error' => $img_array['error'][$key],
+                    'size' => $img_array['size'][$key],
+                ];
+
+                // Chỉ upload nếu là file hình ảnh hợp lệ
+                if ($file['error'] == 0 && in_array($file['type'], $allowTypes)) {
                     $link_hinhanh = uploadFile($file, './uploads/');
-
-                    // Lưu thông tin ảnh vào bảng `hinhanh_san_phams`
                     $this->modelSanPham->insertAlbumAnhSanPham($san_pham_id, $link_hinhanh);
                 }
             }
-
-            // Sau khi thêm sản phẩm, chuyển hướng về trang danh sách sản phẩm
-            header("Location:" . BASE_URL_ADMIN . '?act=sanpham');
-            exit();
         }
+
+        // Sau khi thêm, chuyển về trang danh sách
+        header("Location:" . BASE_URL_ADMIN . '?act=sanpham');
+        exit();
     }
+}
+
 
     public function formEditSanPham()
     {
@@ -113,7 +130,7 @@ class AdminSanPhamController
             exit();
         }
     }
-  public function postEditSanPham()
+ public function postEditSanPham()
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $san_pham_id = $_POST['san_pham_id'] ?? '';
@@ -130,35 +147,53 @@ class AdminSanPhamController
 
         $errors = [];
 
-        // ✅ Kiểm tra lỗi
+        // ✅ Kiểm tra dữ liệu nhập vào
         if (empty($tensp)) {
             $errors['tensp'] = 'Tên sản phẩm không được để trống';
         }
-        if (empty($giasp)) {
-            $errors['giasp'] = 'Giá sản phẩm không được để trống';
-        }
-        if (empty($soluong)) {
-            $errors['soluong'] = 'Số lượng không được để trống';
-        }
-        if (empty($danh_muc_id)) {
-            $errors['danh_muc_id'] = 'Danh mục phải được chọn';
+
+        if (!is_numeric($giasp) || $giasp < 0) {
+            $errors['giasp'] = 'Giá sản phẩm phải là số dương';
         }
 
-        // ✅ Nếu có lỗi thì quay lại form
+        if (!empty($giakm)) {
+            if (!is_numeric($giakm) || $giakm < 0) {
+                $errors['giakm'] = 'Giá khuyến mãi phải là số dương';
+            } elseif ($giakm > $giasp) {
+                $errors['giakm'] = 'Giá khuyến mãi không được lớn hơn giá gốc';
+            }
+        }
+
+        if (!is_numeric($soluong) || $soluong < 0) {
+            $errors['soluong'] = 'Số lượng phải là số dương';
+        }
+
+        if (!is_numeric($danh_muc_id) || $danh_muc_id <= 0) {
+            $errors['danh_muc_id'] = 'Danh mục không hợp lệ';
+        }
+
+        // ✅ Nếu có lỗi → chuyển về form sửa
         if (!empty($errors)) {
             $_SESSION['error'] = $errors;
             header("Location:" . BASE_URL_ADMIN . '?act=formsuasanpham&id_san_pham=' . $san_pham_id);
             exit();
         }
 
-        // ✅ Xử lý upload ảnh (nếu có)
-        if (isset($hinhanh) && $hinhanh['error'] == UPLOAD_ERR_OK) {
+        // ✅ Xử lý upload ảnh nếu có ảnh mới
+        if ($hinhanh && $hinhanh['error'] == UPLOAD_ERR_OK) {
+            $allowTypes = ['image/jpeg', 'image/png', 'image/webp'];
+            if (!in_array($hinhanh['type'], $allowTypes)) {
+                $_SESSION['error'] = ['hinhanh' => 'Chỉ cho phép ảnh JPG, PNG hoặc WebP'];
+                header("Location:" . BASE_URL_ADMIN . '?act=formsuasanpham&id_san_pham=' . $san_pham_id);
+                exit();
+            }
+
             $new_file = uploadFile($hinhanh, './uploads/');
             if (!empty($old_file)) {
                 deleteFile($old_file);
             }
         } else {
-            $new_file = $old_file; // Giữ ảnh cũ
+            $new_file = $old_file; // Giữ lại ảnh cũ
         }
 
         // ✅ Cập nhật sản phẩm
@@ -173,11 +208,12 @@ class AdminSanPhamController
             $new_file
         );
 
-        // ✅ Chuyển hướng về danh sách
+        // ✅ Chuyển về trang danh sách
         header("Location:" . BASE_URL_ADMIN . '?act=sanpham');
         exit();
     }
 }
+
 
 
     public function postEditAnhSanPham()

@@ -8,17 +8,15 @@
         <form action="<?= BASE_URL_ADMIN . '?act=suadanhmuc' ?>" method="post">
             <div class="row mb10">
                 Mã loại<br>
-                <input type="text" name="id" disabled class="form-control">
+                <input type="text" name="id_disabled" disabled class="form-control" value="<?= $danhMuc['id'] ?>">
             </div>
             <div class="row mb10">
                 Tên loại<br>
-                <input type="text" name="tendanhmuc" class="form-control" value="<?= $danhMuc['tendanhmuc'] ?>">
-              
+                <input type="text" name="tendanhmuc" class="form-control" value="<?= $danhMuc['tendanhmuc'] ?? '' ?>">
+                <?php if (!empty($errors['tendanhmuc'])): ?>
+                    <span class="text-danger"><?= $errors['tendanhmuc'] ?></span>
+                <?php endif; ?>
             </div>
-            <span class="text-danger">
-
-            </span>
-
 
             <div class="row mb-5">
                 <input type="hidden" name="id" value="<?= $danhMuc['id'] ?>">
@@ -26,7 +24,6 @@
                 <input type="reset" value="Nhập lại" class="btn btn-danger mt-2" style="width: 50%;  height: 40px;">
                 <a href="<?= BASE_URL_ADMIN . '?act=danhmuc' ?>"><input type="button" value="Danh sách" class="btn btn-success mt-2"></a>
             </div>
-
         </form>
     </div>
 </div>

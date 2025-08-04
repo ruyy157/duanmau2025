@@ -3,6 +3,19 @@
     <div class="form-control">
         <h1>Danh sách các loại đồ ăn</h1>
     </div>
+     <!-- THÔNG BÁO THÀNH CÔNG -->
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success">
+            <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- THÔNG BÁO LỖI -->
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger">
+            <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+        </div>
+    <?php endif; ?>
     <div class="boxcenter">
         <div class="form-control">
             <table class="table"border="1" cellpadding="10" cellspacing="0" width="100%">

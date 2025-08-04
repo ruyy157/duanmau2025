@@ -24,11 +24,7 @@
                         <td> <?= $taikhoan['hoten'] ?></td>
                         <td> <?= $taikhoan['email'] ?></td>
                         <td><?= $taikhoan['matkhau'] ?></td>
-
-
-
                     </tr>
-
                 <?php endforeach ?>
 
             </table>
