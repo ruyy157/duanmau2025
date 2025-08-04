@@ -5,7 +5,7 @@
     </div>
     <div class="boxcenter">
         <div class="form-control">
-            <table class="table">
+            <table class="table"border="1" cellpadding="10" cellspacing="0" width="100%">
                 <tr>
                     <th></th>
                     <th>Mã loại</th>

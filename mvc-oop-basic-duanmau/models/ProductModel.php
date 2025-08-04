@@ -43,23 +43,23 @@ class ProductModel
             echo 'lỗi' . $e->getMessage();
         }
     }
-      public function getListSanPhamDanhMuc($danh_muc_id)
-    {
-        try {
-            $sql = 'SELECT sanpham.*, danhmuc.tendanhmuc
-                    FROM sanpham
-                    INNER JOIN danhmuc ON sanpham.danh_muc_id = danhmuc.id
-                    WHERE sanpham.danh_muc_id =  ' . $danh_muc_id;
+     public function getListSanPhamDanhMuc($danh_muc_id)
+{
+    try {
+        $sql = 'SELECT sanpham.*, danhmuc.tendanhmuc
+                FROM sanpham
+                INNER JOIN danhmuc ON sanpham.danh_muc_id = danhmuc.id
+                WHERE sanpham.danh_muc_id = :danh_muc_id
+                ORDER BY sanpham.id DESC
+                LIMIT 3';
 
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':danh_muc_id' => $danh_muc_id]);
 
-
-            $stmt = $this->conn->prepare($sql);
-
-            $stmt->execute();
-
-            return $stmt->fetchAll();
-        } catch (Exception $e) {
-            echo 'lỗi'  . $e->getMessage();
-        }
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        echo 'Lỗi: ' . $e->getMessage();
     }
+}
+
 }

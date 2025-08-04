@@ -227,74 +227,17 @@ class AdminSanPham
 
 
     // bình luận
-    public function getBinhLuanFormKhachHang($id)
+        public function getBinhLuanFormSanPham($id)
     {
 
         try {
-            $sql = 'SELECT binh_luans.*, sanpham.tensp
-                    FROM binh_luans
-                    INNER JOIN sanpham 
-                    ON binh_luans.san_pham_id = sanpham.id
-                    WHERE binh_luans.tai_khoan_id= :id
-                    ';
+            $sql = 'SELECT binhluan.*, taikhoan.hoten
+                    FROM binhluan
+                    INNER JOIN taikhoan 
+                    ON binhluan.tai_khoan_id = taikhoan.id
+                    WHERE binhluan.san_pham_id= :id
+                    AND binhluan.trangthai = 1
 
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([':id' => $id]);
-            return $stmt->fetchAll();
-        } catch (Exception $e) {
-            echo "Lỗi: " . $e->getMessage();
-        }
-    }
-    public function getDetailBinhLuan($id)
-    {
-        try {
-            $sql = 'SELECT * FROM binh_luans WHERE id = :id'; // Sửa câu lệnh SQL
-
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                ':id' => $id
-            ]);
-            return $stmt->fetch(); // Trả về kết quả
-        } catch (Exception $e) {
-            echo "Lỗi: " . $e->getMessage(); // Hiển thị lỗi
-        }
-    }
-    public function updateTrangThaiBinhLuan(
-        $id,
-        $trang_thai,
-
-
-    ) {
-        try {
-
-            $sql = 'UPDATE binh_luans 
-                    SET trang_thai = :trang_thai
-                    
-                     
-                       
-                    WHERE id = :id';
-
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([
-                ':trang_thai' => $trang_thai,
-                ':id' => $id,
-
-            ]);
-            return true;
-        } catch (Exception $e) {
-            echo "Lỗi: " . $e->getMessage();
-            return false;
-        }
-    }
-    public function getBinhLuanFormSanPham($id)
-    {
-
-        try {
-            $sql = 'SELECT binh_luans.*, tai_khoans.ho_ten
-                    FROM binh_luans
-                    INNER JOIN tai_khoans 
-                    ON binh_luans.tai_khoan_id = tai_khoans.id
-                    WHERE binh_luans.san_pham_id= :id
                     ';
 
             $stmt = $this->conn->prepare($sql);

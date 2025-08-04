@@ -44,7 +44,7 @@
                                 <span class="currency"></span><?= ($sanPham['giasp'])  ?> K</span></span>
                         <form action="<?= BASE_URL . '?act=themgiohang' ?>" method="post">
                             <p> Số lượng còn : <?= $sanPham['soluong'] ?></p>
-                           
+
 
                             <div class="product-cart-variation">
                                 <ul>
@@ -83,68 +83,71 @@
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#cat2">Album</button>
                                 </li>
                                 <li>
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#cat3">Bình luận  </a></button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#cat3">Bình luận </a></button>
 
                                 </li>
                             </ul>
                         </div>
-                        <!--=== Foodix Tab Content ===-->
                         <div class="tab-content">
                             <!--=== Tab Pane ===-->
-                            <div class="tab-pane fade " id="cat1">
+                            <div class="tab-pane fade show active" id="cat1">
                                 <div class="row img-hover-rotate">
-                                    <!-- <?php foreach ($listAnhSanPham as $key => $anhSanPham) : ?>
-                                        <div class="col-4 ">
-                                            <img class="" src="<?= BASE_URL . $anhSanPham['link_hinh_anh'] ?>" alt="" style="height: 150px; width: 170px; border-radius: 5px;
-                                            ">
+                                    <p><?= $sanPham['mota'] ?></p>
 
-                                        </div>
-                                    <?php endforeach; ?> -->
                                 </div>
 
                             </div>
-                            <div class="tab-pane fade show active" id="cat2">
+                            <div class="tab-pane fade" id="cat2">
                                 <div class="content-box">
-                                    <p><?= $sanPham['mota'] ?></p>
 
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="cat3">
-                                <!-- <?php foreach ($listBinhLuan as $binhLuan) : ?>
+                                <?php foreach ($listBinhLuan as $binhLuan) : ?>
                                     <div class="content-box mb-3">
                                         <div class="row align-items-start">
                                             <div class="col-4 text-center">
-                                                <img src="<?= $binhLuan['anh_dai_dien'] ?>" alt=""
+                                                <img src="" alt=""
                                                     style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover;">
                                                 <center>
-                                                    <p><b><?= $binhLuan['ho_ten'] ?></p></b>
+                                                    <p><b><?= $binhLuan['hoten'] ?></p></b>
                                                 </center>
                                             </div>
 
                                             <div class="col-8">
                                                 <div class="form-control" style="border: none; background-color: #f8f9fa;"> <!-- Đặt background màu sáng -->
-                                                    <p><b>Ngày đăng:</b> <?= $binhLuan['ngay_dang'] ?></p>
-                                                    <h4><?= $binhLuan['noi_dung'] ?></h4>
+                                                    <p><b>Ngày đăng:</b> <?= $binhLuan['ngaydang'] ?></p>
+                                                    <h4><?= $binhLuan['noidung'] ?></h4>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                <?php endforeach; ?> -->
+                                <?php endforeach; ?>
 
-                                <form action="#">
-                                    <div class="col mt-10">
-                                        <h3 class="text-danger mb-3">Nội dung bình luận</h3>
-                                        <textarea name="" class="form-control mb-3" id="" required></textarea>
+                                <?php if (isset($_SESSION['user_client'])) : ?>
+                                    <form action="<?= BASE_URL . '?act=binhluan&id_san_pham=' . $sanPham['id'] ?>" method="post">
+                                        <input type="hidden" name="id_san_pham" value="<?= $sanPham['id'] ?>">
+                                        <input type="hidden" name="ngaydang" value="<?= date('Y-m-d H:i:s') ?>">
+
+                                        <div class="col mt-10">
+                                            <h3 class="text-danger mb-3">Nội dung bình luận</h3>
+                                            <textarea name="noidung" class="form-control mb-3" id="noidung" required></textarea>
+                                        </div>
+                                        <div>
+                                            <button type="submit" class="btn btn-primary ">Gửi bình luận</button>
+                                        </div>
+                                    </form>
+                                <?php else : ?>
+                                    <div class="alert alert-warning mt-3">
+                                        <strong>Bạn cần <a href="<?= BASE_URL . '?act=login' ?>" class="btn btn-primary">đăng nhập</a> để bình luận.</strong>
                                     </div>
-                                    <div>
-                                        <button type="submit" class="btn btn-primary ">Gửi bình luận</button>
-                                    </div>
-                                </form>
+                                <?php endif; ?>
 
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xl-6">
                     <div class="foodix-banner-wrapper">
                         <!--=== Foodix Banner ===-->
@@ -184,9 +187,9 @@
                             <!--=== Menu Item ===-->
                             <div class="menu-item related-menu-item text-center mb-30 wow fadeInUp">
                                 <div class="menu-image">
-                                <a href="<?= BASE_URL . '?act=chitietsanpham&id_san_pham=' . $sanPham['id']; ?>">
-                                       <img src="<?= BASE_URL . $sanPham['hinhanh'] ?>" alt="Image">
-                                </a>
+                                    <a href="<?= BASE_URL . '?act=chitietsanpham&id_san_pham=' . $sanPham['id']; ?>">
+                                        <img src="<?= BASE_URL . $sanPham['hinhanh'] ?>" alt="Image">
+                                    </a>
                                 </div>
                                 <div class="menu-info">
                                     <h4 class="title"><a href="<?= BASE_URL . '?act=chitietsanpham&id_san_pham=' . $sanPham['id']; ?>"><?= $sanPham['tensp'] ?></a></h4>

@@ -1,5 +1,4 @@
 <?php
-
 // Kết nối CSDL qua PDO
 function connectDB() {
     // Kết nối CSDL
@@ -21,7 +20,15 @@ function connectDB() {
         echo ("Connection failed: " . $e->getMessage());
     }
 }
-
+function deleteSessionError()
+{
+    if (isset($_SESSION['flash'])) {
+        unset($_SESSION['flash']);
+        unset($_SESSION['error']);
+        // session_unset();
+        // session_destroy();
+    }
+}
 function uploadFile($file, $folderSave){
     $file_upload = $file;
     $pathStorage = $folderSave . rand(10000, 99999) . $file_upload['name'];
@@ -39,5 +46,19 @@ function deleteFile($file){
     $pathDelete = PATH_ROOT . $file;
     if (file_exists($pathDelete)) {
         unlink($pathDelete); // Hàm unlink dùng để xóa file
+    }
+
+}
+function checkLoginAdmin()
+{
+    // Nếu chưa đăng nhập (session chưa tồn tại)
+    if (!isset($_SESSION['user_admin'])) {
+        // Gán thông báo lỗi (nếu muốn)
+        $_SESSION['error'] = "Bạn cần đăng nhập để truy cập trang quản trị!";
+        $_SESSION['flash'] = true;
+
+        // Chuyển hướng về trang đăng nhập
+        header("Location: " . BASE_URL_ADMIN . '?act=loginadmin');
+        exit();
     }
 }

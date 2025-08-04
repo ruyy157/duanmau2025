@@ -12,20 +12,50 @@
     <title>Admin Quản Lí</title>
     <link rel="shortcut icon" href="../assets/images/favicon.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+    
+
+        .submenu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            list-style: none;
+            background: orange;
+            min-width: 150px;
+        }
+
+        .submenu li a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .submenu li a:hover {
+            background: #ff9933;
+        }
+
+        /* Hiển thị khi hover */
+        .menu  li:hover .submenu {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
     <div class="boxcenter">
         <header>
             <img src="../image/logo2.avif" alt="" class="logoquan">
-            <ul>
-                <li><a href="index.php">Trang chủ</a></li>
-                <li><a href="<?= BASE_URL_ADMIN . '?act=danhmuc' ?>">Danh mục</a></li>
-                <li><a href="<?= BASE_URL_ADMIN . '?act=sanpham' ?>">Sản phẩm</a></li>
-                <li><a href="index.php?act=dskh">Khách hàng</a></li>
-                <li><a href="index.php?act=dsbl">Bình luận</a></li>
-                <li><a href="index.php?act=thongke">Thống kê</a></li>
-                <li><a href="index.php?act=bill">Đơn hàng</a></li>
+            <ul class="">
+                <li><a href="index.php"><i class="fa-solid fa-house"></i> Trang chủ</a></li>
+                <li><a href="<?= BASE_URL_ADMIN . '?act=danhmuc' ?>"><i class="fas fa-th"></i> Danh mục</a></li>
+                <li><a href="<?= BASE_URL_ADMIN . '?act=sanpham' ?>"><i class="fa-solid fa-burger"></i> Sản phẩm</a></li>
+                <li class="">
+                    <a href="<?=BASE_URL_ADMIN . '?act=listtaikhoan'?>"><i class="fa-solid fa-users"></i>   Tài khoản</a> 
+                </li>
+                <!-- <li><a href="<?=BASE_URL_ADMIN . '?act=formdangky'?>">đăng kí</a></li> -->
+                <li><a href="<?=BASE_URL_ADMIN . '?act=listbinhluan'?>"><i class="fa-solid fa-comments"></i> Bình luận</a></li>
                 <li><a href="../index.php">Thoát</a></li>
             </ul>
         </header>
