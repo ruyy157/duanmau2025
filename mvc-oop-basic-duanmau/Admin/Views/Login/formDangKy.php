@@ -1,4 +1,4 @@
-<h2>Đăng ký tài khoản quản trị</h2>
+<!-- <h2>Đăng ký tài khoản quản trị</h2>
 
 <?php if (isset($_SESSION['error'])): ?>
     <p style="color: red;"><?= $_SESSION['error'] ?></p>
@@ -18,4 +18,4 @@
     <input type="password" name="nhaplaimatkhau" required><br><br>
 
     <button type="submit">Đăng ký</button>
-</form>
+</form> -->

@@ -1,4 +1,5 @@
 <?php include "./header.php" ?>
+
 <div class="boxcenter">
     <div class="form-control">
         <h1>Danh sách đồ ăn</h1>
@@ -6,7 +7,7 @@
 
     <div class="boxcenter">
         <div class="form-control">
-            <table class="table"border="1" cellpadding="10" cellspacing="0" width="100%">
+            <table class="table"border="1" cellpadding="10" cellspacing="0" width="100%" >
                 <tr>
                     <th></th>
                     <th>Mã Sản Phẩm</th>

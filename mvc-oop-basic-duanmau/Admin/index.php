@@ -9,12 +9,14 @@ require_once './Controllers/Admindanhmuccontroller.php';
 require_once './Controllers/AdminSanPhamController.php';
 require_once './Controllers/AdminTaiKhoanController.php';
 require_once './Controllers/AdminBinhLuanController.php';
+require_once './Controllers/AdminThongKeController.php';
 
 
 require_once './Models/AdminDanhMuc.php';
 require_once './Models/AdminSanPham.php';
 require_once './Models/AdminTaiKhoan.php';
 require_once './Models/AdminBinhLuan.php';
+require_once './Models/AdminThongKe.php';
 
 
 $act = $_GET['act'] ?? '/';
@@ -23,7 +25,7 @@ if (!in_array($act, ['formdangky', 'dangkyadmin', 'loginadmin', 'checkloginadmin
 }
 
 match ($act) {
-    '/' => (new AdminDanhMucContronller())->home(),
+    '/' => (new AdminThongKeController())->home(),
 
     // Danh mục
     'danhmuc' => (new AdminDanhMucContronller())->danhSachDanhMuc(),

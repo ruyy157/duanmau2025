@@ -287,7 +287,7 @@
         <div class="signup">
             <h2 class="form-title" id="signup"><span>or</span>Đăng nhập</h2>
 
-            <form action="<?= BASE_URL . '?act=checkloginadmin' ?>" method="post">
+            <form action="<?= BASE_URL_ADMIN . '?act=checkloginadmin' ?>" method="post">
                 <div class="form-holder">
 
                     <input type="email" class="input" placeholder="Email" name="email" />
