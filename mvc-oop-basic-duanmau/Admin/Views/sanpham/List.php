@@ -1,64 +1,54 @@
 <?php include "./header.php" ?>
 
 <div class="boxcenter">
-    <div class="form-control">
-        <h1>Danh sách đồ ăn</h1>
+    <div class="form-control mb-3">
+        <h1 class="text-center text-primary">📋 Danh sách đồ ăn</h1>
     </div>
 
-    <div class="boxcenter">
-        <div class="form-control">
-            <table class="table"border="1" cellpadding="10" cellspacing="0" width="100%" >
-                <tr>
-                    <th></th>
-                    <th>Mã Sản Phẩm</th>
-                    <th>Tên Sản Phẩm</th>
-                    <th>Giá</th>
-                    <th>Giá Khuyến Mãi</th>
-                    <th>Hình Ảnh</th>
-                    <th>Số Lượng</th>
-                    <th>Mô Tả</th>
-                    <th>Hành Động</th>
-                </tr>
+    <div class="row g-3">
+        <?php foreach ($listSanPham as $key => $sanPham): ?>
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="<?= BASE_URL . $sanPham['hinhanh'] ?>" 
+                         class="card-img-top" 
+                         alt="Ảnh sản phẩm" 
+                         style="height: 200px; object-fit: cover;">
+                    
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate"><?= $sanPham['tensp'] ?></h5>
+                        <p class="card-text mb-1">
+                            <span class="fw-bold text-danger"><?= number_format($sanPham['giasp'], 0, ',', '.') ?>đ</span>
+                            <?php if ($sanPham['giakm'] > 0): ?>
+                                <span class="text-success ms-2"><?= number_format($sanPham['giakm'], 0, ',', '.') ?>đ</span>
+                            <?php endif; ?>
+                        </p>
+                        <p class="text-muted mb-1">Số lượng: <?= $sanPham['soluong'] ?></p>
+                        <p class="small text-truncate" style="max-width: 250px;"><?= $sanPham['mota'] ?></p>
+                    </div>
+                    
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="<?= BASE_URL_ADMIN . '?act=chitietsanpham&idsanpham=' . $sanPham['id'] ?>" 
+                           class="btn btn-info btn-sm">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a href="<?= BASE_URL_ADMIN . '?act=formsuasanpham&idsanpham=' . $sanPham['id'] ?>" 
+                           class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a href="<?= BASE_URL_ADMIN . '?act=xoasanpham&idsanpham=' . $sanPham['id'] ?>" 
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')" 
+                           class="btn btn-danger btn-sm">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 
-
-                <?php foreach ($listSanPham as $key => $sanPham): ?>
-                    <tr>
-                        <td><input type="checkbox" name="" id=""></td>
-                        <td><?= $key + 1 ?></td>
-                        <td> <?= $sanPham['tensp'] ?></td>
-                        <td> <?= $sanPham['giasp'] ?></td>
-                        <td><?=$sanPham['giakm']?></td>
-                        <td>
-                            <img src="<?= BASE_URL . $sanPham['hinhanh'] ?>"
-                                </td>
-                        <td> <?= $sanPham['soluong'] ?></td>
-                        <td> <?= $sanPham['mota'] ?></td>
-                        <td>
-                            <div class="btn-group">
-                                <a href="<?= BASE_URL_ADMIN . '?act=chitietsanpham&idsanpham=' . $sanPham['id'] ?>">
-                                    <button class="btn btn-danger"><i class="fa-solid fa-eye"></i></button></a>
-                                <a href="<?= BASE_URL_ADMIN . '?act=formsuasanpham&idsanpham=' . $sanPham['id'] ?>">
-                                    <button class="btn btn-success"><i class=" fas fa-solid fa-hammer"></i></i></button></a>
-
-                                <a href="<?= BASE_URL_ADMIN . '?act=xoasanpham&idsanpham=' . $sanPham['id'] ?>
-                                                 " onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')">
-
-
-                                    <button class="btn btn-warning"><i class="far fa-trash-alt"></i></i></button></a>
-
-                            </div>
-                        </td>
-
-                    </tr>
-
-                <?php endforeach ?>
-
-            </table>
-        </div>
-        <div class="row mb ">
-
-            <a href="<?= BASE_URL_ADMIN . '?act=formthemsanpham' ?>">
-                <input type="button" value="Nhập thêm" class="btn btn-primary mt-3"></a>
-        </div>
+    <div class="text-end mt-4">
+        <a href="<?= BASE_URL_ADMIN . '?act=formthemsanpham' ?>" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Nhập thêm sản phẩm
+        </a>
     </div>
 </div>

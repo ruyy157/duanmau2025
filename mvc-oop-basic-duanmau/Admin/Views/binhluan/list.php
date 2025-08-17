@@ -1,24 +1,24 @@
 <?php require './header.php' ?>
 <div class="boxcenter">
     <div class="form-control">
-        <h1>Danh sách bình luận</h1>
-       <?php if (isset($_SESSION['success'])): ?>
-    <p style="color: green; font-weight: bold;"><?= $_SESSION['success']; unset($_SESSION['success']); ?></p>
-<?php endif; ?>
+        <h1 style="text-align: center; margin-bottom: 20px;">Danh sách bình luận</h1>
 
-<?php if (isset($_SESSION['danger'])): ?>
-    <p style="color: red; font-weight: bold;"><?= $_SESSION['danger']; unset($_SESSION['danger']); ?></p>
-<?php endif; ?>
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="alert success"><?= $_SESSION['success']; unset($_SESSION['success']); ?></div>
+        <?php endif; ?>
 
-<?php if (isset($_SESSION['error'])): ?>
-    <p style="color: red; font-weight: bold;"><?= $_SESSION['error']; unset($_SESSION['error']); ?></p>
-<?php endif; ?>
+        <?php if (isset($_SESSION['danger'])): ?>
+            <div class="alert danger"><?= $_SESSION['danger']; unset($_SESSION['danger']); ?></div>
+        <?php endif; ?>
 
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert error"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
     </div>
 
     <div class="boxcenter">
         <div class="form-control">
-            <table class="table" border="1" cellpadding="10" cellspacing="0" width="100%">
+            <table class="styled-table" width="100%">
                 <thead>
                     <tr>
                         <th></th>
@@ -42,9 +42,9 @@
                             <td><?= $binhluan['ngaydang'] ?></td>
                             <td>
                                 <?php if ($binhluan['trangthai'] == 1): ?>
-                                    <span style="color: green;">Hiển thị</span>
+                                    <span class="status active">Hiển thị</span>
                                 <?php else: ?>
-                                    <span style="color: red;">Đã ẩn</span>
+                                    <span class="status hidden">Đã ẩn</span>
                                 <?php endif; ?>
                             </td>
                             <td>
@@ -67,3 +67,52 @@
         </div>
     </div>
 </div>
+
+<style>
+    .alert {
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+    .alert.success { background: #d4edda; color: #155724; }
+    .alert.danger { background: #f8d7da; color: #721c24; }
+    .alert.error  { background: #fff3cd; color: #856404; }
+
+    .styled-table {
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 15px;
+        width: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .styled-table thead {
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+    }
+    .styled-table th, .styled-table td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+    .styled-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .styled-table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+    .btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+    }
+    .btn-warning { background-color: #ff9800; }
+    .btn-success { background-color: #4CAF50; }
+    .status.active { color: green; font-weight: bold; }
+    .status.hidden { color: red; font-weight: bold; }
+</style>

@@ -42,9 +42,8 @@
 </style>
 
 <div class="boxcenter">
-    <div class="form-control">
-        <h1 style="text-align:center; margin-bottom: 20px;">📊 Thống kê</h1>
-    </div>
+        <h1 style="text-align:center; margin-bottom: 20px; margin-top: 30px;">📊 Thống kê</h1>
+    
 
     <!-- Thẻ thống kê -->
     <div class="stats-container">
